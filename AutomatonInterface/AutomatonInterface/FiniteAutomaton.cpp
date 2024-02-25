@@ -132,17 +132,22 @@ void FiniteAutomaton::SetHasLambdaTransitions(bool hasLambdaTransitions)
     m_hasLambdaTransitions = hasLambdaTransitions;
 }
 
-std::vector<State*> FiniteAutomaton::GetStates()
+const std::vector<State*>& FiniteAutomaton::GetStates()
 {
 	return m_states;
 }
 
-std::vector<Transition*> FiniteAutomaton::GetTransitions()
+const std::vector<State*>& FiniteAutomaton::GetFinalStates()
+{
+    return m_finalStates;
+}
+
+const std::vector<Transition*>& FiniteAutomaton::GetTransitions()
 {
     return m_transitions;
 }
 
-std::vector<char> FiniteAutomaton::GetAlphabeth()
+const std::vector<char>& FiniteAutomaton::GetAlphabeth()
 {
     return m_alphabet;
 }
@@ -150,11 +155,6 @@ std::vector<char> FiniteAutomaton::GetAlphabeth()
 State* FiniteAutomaton::GetInitialState() const
 {
     return m_initialState;
-}
-
-std::vector<State*> FiniteAutomaton::GetFinalStates()
-{
-    return m_finalStates;
 }
 
 int FiniteAutomaton::GetContor()
@@ -265,121 +265,4 @@ void FiniteAutomaton::Reset()
     m_contor = 0;
     m_transitions.clear();
     m_states.clear();
-}
-
-std::ofstream& operator<<(std::ofstream& ofs, const FiniteAutomaton& other)
-{
-    if (other.HasLambdaTransitions())
-    {
-        ofs << "AFN lambda"<<"\n";
-    }
-    else if (other.IsDeterministic())
-    {
-        ofs << "AFD" << "\n";
-    }
-    else 
-    {
-        ofs << "AFN" << "\n";
-    }
-    ofs << other.m_states.size()<<"\n";
-    for (const auto& x : other.m_states)
-    {
-        ofs << x->GetName() << "\n";
-        ofs << x->GetX() << "\n";
-        ofs << x->GetY() << "\n";
-    }
-    ofs << other.m_alphabet.size()<<"\n";
-    for (const auto& x : other.m_alphabet)
-    {
-        ofs << x << "\n";
-    }
-    ofs << other.m_transitions.size()<<"\n";
-    for (Transition* x : other.m_transitions)
-    {
-        ofs << x->GetFirstState()->GetName() << "\n";
-        ofs << x->GetCharacter().toStdString() << "\n";
-        ofs << x->GetSecondState()->GetName() << "\n";
-    }
-    ofs << other.m_initialState->GetName()<<"\n";
-    ofs << other.m_finalStates.size()<<"\n";
-    for (State* s : other.m_finalStates)
-    {
-        ofs << s->GetName() << "\n";
-    }
-    return ofs;
-}
-
-std::ifstream& operator>>(std::ifstream& ifs, FiniteAutomaton& other)
-{
-    
-    int cont;
-    ifs >> cont;
-    for (int i = 0; i < cont; i++)
-    {
-        std::string nume;
-        int x, y;
-        ifs >> nume>>x>>y;
-        QPoint coord(x,y);
-        State* state=new State;
-        state->SetStateName(nume);
-        state->SetCoordinates(coord);
-        other.AddState(state);
-    }
-    ifs >> cont;
-    std::vector<char> alphabet;
-    for (int i = 0; i < cont; i++)
-    {
-        char c;
-        ifs >> c;
-        alphabet.push_back(c);
-    }
-    other.SetAlphabet(alphabet);
-    ifs >> cont;
-    std::vector<Transition*> transitions;
-    for (int i = 0; i < cont; i++)
-    {
-        Transition* transition=new Transition;
-        std::string nume1, nume2, character;
-        ifs >> nume1 >> character >> nume2;
-        for (State* s : other.GetStates())
-        {
-            if (s->GetName() == nume1)
-            {
-                transition->SetFirstState(s);
-            }
-            if (s->GetName() == nume2)
-            {
-                transition->SetSecondState(s);
-            }
-        }
-        transition->SetCharacter(QString::fromStdString(character));
-        transitions.push_back(transition);
-    }
-    other.SetTransitions(transitions);
-    std::string numeInit;
-    ifs >> numeInit;
-    for (State* s : other.GetStates())
-    {
-        if (s->GetStateName() == numeInit)
-        {
-            s->SetInitial(true);
-            other.SetInitialState(s);
-        }
-    }
-    ifs >> cont;
-    for (int i = 0; i < cont; i++)
-    {
-        std::string finalState;
-        ifs >> finalState;
-        for (State* s : other.GetStates())
-        {
-            if (s->GetName() == finalState)
-            {
-                s->SetFinal(true);
-                other.AddFinalState(s);
-            }
-        }
-    }
-    other.m_contor = other.GetStates().size();
-    return ifs;
 }

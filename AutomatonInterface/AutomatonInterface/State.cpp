@@ -20,7 +20,7 @@ void State::SetStateName(const std::string& stateName)
 	m_stateName = stateName;
 }
 
-std::string State::GetStateName()
+const std::string& State::GetStateName()
 {
 	return m_stateName;
 }
@@ -80,17 +80,12 @@ int State::GetY()
 	return m_coordinates.y();
 }
 
-QPoint State::GetCoordinates()
+const QPoint& State::GetCoordinates()
 {
 	return m_coordinates;
 }
 
-QColor State::GetColor()
+const QColor& State::GetColor()
 {
 	return m_color;
-}
-
-std::string State::GetName()
-{
-	return this->m_stateName;
 }

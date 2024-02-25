@@ -17,15 +17,14 @@ public:
 	void SetInitial(bool isInitial);
 	void SetColor(const QColor& color);
 
-	std::string GetStateName();
+	const std::string& GetStateName();
 	bool IsSelected();
 	bool IsFinal();
 	bool IsInitial();
 	int GetX();
 	int GetY();
-	QPoint GetCoordinates();
-	QColor GetColor();
-	std::string GetName();
+	const QPoint& GetCoordinates();
+	const QColor& GetColor();
 
 public:
 	static const size_t kDiameter{ 40 };

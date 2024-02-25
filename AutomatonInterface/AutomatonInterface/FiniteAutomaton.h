@@ -25,11 +25,11 @@ public:
 	void SetHasLambdaTransitions(bool hasLambdaTransitions);
 	
 
-	std::vector<State*> GetStates() override;
-	std::vector<Transition*> GetTransitions() override;
-	std::vector<char> GetAlphabeth() override;
+	const std::vector<State*>& GetStates() override;
+	const std::vector<State*>& GetFinalStates() override;
+	const std::vector<Transition*>& GetTransitions() override;
+	const std::vector<char>& GetAlphabeth() override;
 	State* GetInitialState() const override;
-	std::vector<State*> GetFinalStates() override;
 
 	int GetContor() override;
 
@@ -39,10 +39,7 @@ public:
 	void AddFinalState(State* state) override;
 	void RemoveState(State* state) override;
 
-	friend std::ofstream& operator<<(std::ofstream& ofs, const FiniteAutomaton& other);
-	friend std::ifstream& operator>>(std::ifstream& ifs, FiniteAutomaton& other);
-
-	void Reset();
+	void Reset() override;
 
 private:
 	std::vector<State*> m_states;

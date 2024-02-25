@@ -1,12 +1,12 @@
 #include "Transition.h"
 
 Transition::Transition()
-	:m_firstState{nullptr},m_secondState{nullptr}, m_character{' '}, m_pdCharacter{' '},isVerified{false}
+	:m_firstState{nullptr},m_secondState{nullptr}, m_character{' '}, isVerified{false}
 {
 }
 
-Transition::Transition(State* n1, State* n2, const QString& character, const QString& pdCharacter)
-	:m_firstState{ n1 }, m_secondState{ n2 }, m_character{ character }, m_pdCharacter{ pdCharacter },isVerified{false}
+Transition::Transition(State* n1, State* n2, const QString& character)
+	:m_firstState{ n1 }, m_secondState{ n2 }, m_character{ character }, isVerified{false}
 {
 }
 
@@ -30,11 +30,6 @@ void Transition::SetCharacter(const QString& character)
 	m_character = character;
 }
 
-void Transition::SetPDCharacter(const QString& pdCharacter)
-{
-	m_pdCharacter = pdCharacter;
-}
-
 void Transition::SetIsVerified(bool b)
 {
 	isVerified = b;
@@ -50,14 +45,9 @@ State* Transition::GetSecondState()
 	return m_secondState;
 }
 
-QString Transition::GetCharacter()
+const QString& Transition::GetCharacter()
 {
 	return m_character;
-}
-
-QString Transition::GetPDCharacter()
-{
-	return m_pdCharacter;
 }
 
 bool Transition::IsVerified()

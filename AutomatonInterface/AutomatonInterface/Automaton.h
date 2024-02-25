@@ -24,11 +24,11 @@ public:
     virtual void SetTransitions(std::vector<Transition*> transitions) = 0;
     virtual void SetInitialState(State* state) = 0;
 
-    virtual std::vector<State*> GetStates() = 0;
-    virtual std::vector<Transition*> GetTransitions() = 0;
-    virtual std::vector<char> GetAlphabeth() = 0;
+    virtual const std::vector<State*>& GetStates() = 0;
+    virtual const std::vector<State*>& GetFinalStates() = 0;
+    virtual const std::vector<Transition*>& GetTransitions() = 0;
+    virtual const std::vector<char>& GetAlphabeth() = 0;
     virtual State* GetInitialState() const = 0;
-    virtual std::vector<State*> GetFinalStates() = 0;
 
     virtual int GetContor() = 0;
 
