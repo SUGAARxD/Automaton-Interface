@@ -28,19 +28,19 @@ AutomatonInterface::AutomatonInterface(QWidget* parent)
     m_checkWord->move(this->rect().width() - 100, 90);
     connect(m_checkWord, &QPushButton::clicked, this, &AutomatonInterface::CheckWord);
 
-    m_AFD.SetIsDeterministic(true);
-    m_AFNLambda.SetHasLambdaTransitions(true);
+    m_DFA.SetIsDeterministic(true);
+    m_NFALambda.SetHasLambdaTransitions(true);
 
-    m_automaton = &m_AFN;
+    m_automaton = &m_NFA;
 
-    m_radioButtonAFN = new QRadioButton("AFN", this);
+    m_radioButtonAFN = new QRadioButton("NFA", this);
     m_radioButtonAFN->setFixedSize(80, 20);
     m_radioButtonAFN->move(this->rect().width() - 100, 0);
     connect(m_radioButtonAFN, &QRadioButton::clicked, this,
         [this]()
         {
             m_lambdaTransition->setVisible(false);
-            m_automaton = &m_AFN;
+            m_automaton = &m_NFA;
             m_firstState = nullptr;
             m_secondState = nullptr;
             ResetCheckWordProcess();
@@ -48,14 +48,14 @@ AutomatonInterface::AutomatonInterface(QWidget* parent)
         }
     );
 
-    m_radioButtonAFD = new QRadioButton("AFD", this);
+    m_radioButtonAFD = new QRadioButton("DFA", this);
     m_radioButtonAFD->setFixedSize(80, 20);
     m_radioButtonAFD->move(this->rect().width() - 100, 20);
     connect(m_radioButtonAFD, &QRadioButton::clicked, this,
         [this]()
         {
             m_lambdaTransition->setVisible(false);
-            m_automaton = &m_AFD;
+            m_automaton = &m_DFA;
             m_firstState = nullptr;
             m_secondState = nullptr;
             ResetCheckWordProcess();
@@ -63,14 +63,14 @@ AutomatonInterface::AutomatonInterface(QWidget* parent)
         }
     );
 
-    m_radioButtonAFNLambda = new QRadioButton("AFN λ", this);
+    m_radioButtonAFNLambda = new QRadioButton("NFA λ", this);
     m_radioButtonAFNLambda->setFixedSize(80, 20);
     m_radioButtonAFNLambda->move(this->rect().width() - 100, 40);
     connect(m_radioButtonAFNLambda, &QRadioButton::clicked, this,
         [this]()
         {
             m_lambdaTransition->setVisible(true);
-            m_automaton = &m_AFNLambda;
+            m_automaton = &m_NFALambda;
             m_firstState = nullptr;
             m_secondState = nullptr;
             ResetCheckWordProcess();
@@ -219,7 +219,7 @@ void AutomatonInterface::mousePressEvent(QMouseEvent* e)
                             {
                                 if (m_lambdaTransition->isChecked() && m_lambdaTransition->isVisible())
                                 {
-                                    m_automaton->AddTransiton(m_firstState, m_secondState, m_AFN.LAMBDA);
+                                    m_automaton->AddTransiton(m_firstState, m_secondState, m_NFA.LAMBDA);
                                 }
                                 else
                                 {
@@ -407,7 +407,7 @@ void AutomatonInterface::CheckWord()
             bool ok;
             word = QInputDialog::getText(nullptr, "Check Word", "Enter a word:", QLineEdit::Normal, "", &ok);
             if (word.isEmpty())
-                word = m_AFD.LAMBDA;
+                word = m_DFA.LAMBDA;
             m_textbox->setVisible(true);
             m_textbox->setStyleSheet("background-color: transparent; color: black; border: none; font-size: 24px;");
             QFontMetrics qfm(m_textbox->font());
@@ -447,7 +447,7 @@ void AutomatonInterface::DrawCheckWordProcess()
 
         if (index < word.size())
         {
-            if (word == m_AFD.LAMBDA && currentState->IsFinal())
+            if (word == m_DFA.LAMBDA && currentState->IsFinal())
             {
                 currentState->SetColor("#01ff71");
                 m_textbox->setStyleSheet("background-color: transparent; color: green; border: none; font-size: 24px;");
@@ -458,9 +458,9 @@ void AutomatonInterface::DrawCheckWordProcess()
             }
             for (Transition* transition : m_automaton->GetTransitions())
             {
-                if (transition->GetFirstState() == currentState && (transition->GetCharacter() == word[index] || transition->GetCharacter() == m_AFD.LAMBDA))
+                if (transition->GetFirstState() == currentState && (transition->GetCharacter() == word[index] || transition->GetCharacter() == m_DFA.LAMBDA))
                 {
-                    if (transition->GetCharacter() == m_AFNLambda.LAMBDA)
+                    if (transition->GetCharacter() == m_NFALambda.LAMBDA)
                         currentStates.push({ transition->GetSecondState(), index });
                     else
                         currentStates.push({ transition->GetSecondState(), index + 1 });

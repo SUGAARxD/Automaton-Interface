@@ -49,9 +49,9 @@ private:
 
     State* m_firstState, * m_secondState;
     Automaton* m_automaton;
-    FiniteAutomaton m_AFD;
-    FiniteAutomaton m_AFN;
-    FiniteAutomaton m_AFNLambda;
+    FiniteAutomaton m_DFA;
+    FiniteAutomaton m_NFA;
+    FiniteAutomaton m_NFALambda;
 
     QRadioButton* m_radioButtonAFN, * m_radioButtonAFD, * m_radioButtonAFNLambda;
     QRadioButton* m_selectInitialState;
