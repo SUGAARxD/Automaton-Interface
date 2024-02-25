@@ -1,5 +1,5 @@
 # Automaton-Interface
-This program is a graphical application designed for the creation, simulation, and analysis of finite automaton, deterministic or nondeterministic. It provides an interactive way to visualize and understand the workings of an automaton.
+This program is a Graphical User Interface Application designed for the creation, simulation, and analysis of finite automaton, deterministic or nondeterministic. It provides an interactive way to visualize and understand the working of an automaton.
 
 ## Features
 ### State management
@@ -13,7 +13,7 @@ This program is a graphical application designed for the creation, simulation, a
 - *Create Lambda Transitions*: Define lambda(λ) transitions between states by checking λ Transition button and right clicking first state and then second state; this function appears only for an NFA λ.
 
 ### Automaton Management
-- Gives the used the possibility to choose among different types of automatons like DFA, NFA and NFA λ.
+- Gives the user the possibility to choose among different types of automatons like DFA, NFA and NFA λ.
 
 ### Word Processing 
 - *Check Word*: Verifies input word if it's accepted by the automaton. It will display an animation of the word passing throw the automaton.
