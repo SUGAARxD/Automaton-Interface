@@ -17,7 +17,7 @@ This program is a graphical application designed for the creation, simulation, a
 
 ### Word Processing 
 - *Check Word*: Verifies input word if it's accepted by the automaton. It will display an animation of the word passing throw the automaton.
-- "Check File Words*: Bulk verify words from a file if they are accepted by the automaton.
+- *Check File Words*: Bulk verify words from a file if they are accepted by the automaton.
 
 
 ![image](https://github.com/SUGAARxD/Automaton-Interface/assets/80158909/06d37779-063d-4b6f-a641-8c02ff2567cd)
